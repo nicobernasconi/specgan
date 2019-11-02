@@ -53,8 +53,8 @@ def load_audio(path):
     except:
         return None, None
 
-print
-print "loading all audio files and calculate the mean and the standard deviation. it may take a while..."
+
+print ("loading all audio files and calculate the mean and the standard deviation. it may take a while...")
 # parallel loading
 results = joblib.Parallel(n_jobs=-1)(
     joblib.delayed(load_audio)(path) for path in filepaths)
@@ -106,8 +106,8 @@ def load_melspecs(path):
     return norm_mel, category_index
 
 # parallel loading
-print
-print "generate normalized spectrogram images... "
+
+print ("generate normalized spectrogram images... ")
 results = joblib.Parallel(n_jobs=-1)(
     joblib.delayed(load_melspecs)(path) for path in filepaths)
 
@@ -115,8 +115,8 @@ specs = [spec for spec, _ in results if spec is not None]
 categories = [category for _, category in results if category is not None]
 
 # save all
-print
-print "save data into ", args.output_file
+
+print ("save data into ", args.output_file)
 np.savez(args.output_file, specs=specs, categories=categories, category_names=categories_names,
          mean=mel_means, std=mel_stds)
-print "Done!"
+print ("Done!")
