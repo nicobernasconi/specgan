@@ -8,7 +8,7 @@ import numpy as np
 from scipy import signal
 import soundfile as sf
 
-from hparams import hparams
+from utils.hparams import hparams
 
 def load_wav(path, sr):
     return librosa.core.load(path, sr=sr)[0]
