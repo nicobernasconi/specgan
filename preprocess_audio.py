@@ -20,12 +20,12 @@ filepaths = glob(os.path.join(args.input_dir,"*","*"))
 
 categories_names = [os.path.basename(category) for category in categories if os.path.isdir(category)] # ignore readme.txt! :-)
 
-print "Categories:", categories_names
-print "# of categories:", len(categories_names)
-print "# of files:", len(filepaths)
+print ("Categories:", categories_names)
+print ("# of categories:", len(categories_names))
+print ("# of files:", len(filepaths))
 
 if len(filepaths) == 0:
-    print "Error: You need to specify a root directory containing directories (per each category) containing audio files"
+    print ("Error: You need to specify a root directory containing directories (per each category) containing audio files")
     exit()
 
 from utils import audio_tools as audio
