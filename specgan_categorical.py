@@ -187,7 +187,7 @@ if os.path.exists("./logs/") is False:
 # load data
 
 if os.path.exists(args.input_data) is False:
-    print "training data not found at:", args.input_data
+    print ("training data not found at:", args.input_data)
     exit()
 
 # First we load nomalized spectrogram data
@@ -279,16 +279,16 @@ log_path = './logs/generator/' + datestr
 g_callback = TensorBoard(log_path)
 g_callback.set_model(generator_model)
 g_names = ["generator_loss", "generator_loss_ws"]
-print "for generator"
-print "tensorboard --port 6006 --logdir " + log_path + " &"
+print ("for generator")
+print ("tensorboard --port 6006 --logdir " + log_path + " &")
 
 log_path = './logs/discriminator/' + datestr
 d_callback = TensorBoard(log_path)
 d_callback.set_model(discriminator_model)
 d_names = ["discriminator_loss", "discriminator_loss_real", "discriminator_loss_fake",
                             "discriminator_loss_averaged", "discriminator_loss_categorical"]
-print "for discriminator"
-print "tensorboard --port 6007 --logdir " + log_path + " &"
+print ("for discriminator")
+print ("tensorboard --port 6007 --logdir " + log_path + " &")
 
 for epoch in range(args.epochs):
     # shuffleing samples
