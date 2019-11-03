@@ -6,8 +6,7 @@ Preprocesar Audio
 ---
 
 Se generan los archivos de entrenamiento,generando los diagramas mels de los audios en las carpeta de entrenamiento, codificando ademas las clases de dichos audio.
-Se debe orgaanizar los audios en una estructura de carpertas con la forma. {TRAIN_AUDIO_FOLDER}/{CLASSES}/{AUDIO_FILE}
-
+Se debe orgaanizar los audios en una estructura de carpertas con la forma: {TRAIN_AUDIO_FOLDER}/{CLASSES}/{AUDIO_FILE}
 El preproceso dara por resultado, un archivo con extencion .npz
 
 ```
@@ -25,9 +24,9 @@ $ python specgan_categorical.py -i ./training_data.npz -o ./checkpoints -e 200
 ```
 
 ```
--i filepath to the training data created with proprocess_audio.py
--e number of Epochs
--o path to a directory, where the script saves generated spectrogram images, audio and models  
+-i Archivo creado en el proceso iniciado en  proprocess_audio.py
+-e numero de epecas
+-o Carpeta en la que se generaran audios, espectogramas y modelos, productos del entrenamientos
 ```
 
 
