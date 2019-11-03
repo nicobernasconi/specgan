@@ -59,7 +59,7 @@ def make_generator():
     of size 128x128x1."""
 
     model = Sequential()
-    model.add(Dense(256 * D, input_dim=100))
+    model.add(Dense(256 * D, input_dim=DIM_INPUT))
     model.add(Reshape((4, 4, 16 * D)))
     model.add(Activation('relu'))
     model.add(UpSampling2D(size=(2, 2)))
