@@ -37,7 +37,7 @@ except ImportError:
 BATCH_SIZE = 64
 TRAINING_RATIO = 5  # The training ratio is the number of discriminator updates per generator update. The paper uses 5.
 GRADIENT_PENALTY_WEIGHT = 10  # As per the paper
-DIM_INPUT=10000
+DIM_INPUT=100
 
 D = 64 # model size coef
 
