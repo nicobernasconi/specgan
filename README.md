@@ -7,6 +7,7 @@ Preprocesar Audio
 
 Se generan los archivos de entrenamiento,generando los diagramas mels de los audios en las carpeta de entrenamiento, codificando ademas las clases de dichos audio.
 Se debe orgaanizar los audios en una estructura de carpertas con la forma. {TRAIN_AUDIO_FOLDER}/{CLASSES}/{AUDIO_FILE}
+
 El preproceso dara por resultado, un archivo con extencion .npz
 
 ```
