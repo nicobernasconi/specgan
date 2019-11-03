@@ -2,20 +2,22 @@
 
 
 
-Preprocess
+Preprocesar Audio
 ---
 
-At first, you need to create a .npz archive containing normalized spectrogram images of training audio files and category info. It may take a few minutes to an hour depending on the number of files in your dataset.
+Se generan los archivos de entrenamiento,generando los diagramas mels de los audios en las carpeta de entrenamiento, codificando ademas las clases de dichos audio.
+Se debe orgaanizar los audios en una estructura de carpertas con la forma. {TRAIN_AUDIO_FOLDER}/{CLASSES}/{AUDIO_FILE}
+El preproceso dara por resultado, un archivo con extencion .npz
 
 ```
 $ python preprocess_audio.py -i ./drums-selected/ -o ./training_data.npz
 ```
 
 
-Training
+Entrenamiento
 ---
 
-Then, start training using the created training data!    
+Se inicia el entrenamiento    
 
 ```
 $ python specgan_categorical.py -i ./training_data.npz -o ./checkpoints -e 200
@@ -26,15 +28,12 @@ $ python specgan_categorical.py -i ./training_data.npz -o ./checkpoints -e 200
 -e number of Epochs
 -o path to a directory, where the script saves generated spectrogram images, audio and models  
 ```
-Generate Sounds
+
+
+
+Creditos 🙏
 ---
 
-Once trained, you can use the trained models to generate random sounds and classify them. see [this jupyter notebook](https://github.com/nicobernasconi/specgan/blob/master/examples/generate-sound.ipynb).  
-
-
-
-Credits 🙏
----
 - The implementation of Improved Wasserstein GAN proposed in https://arxiv.org/abs/1704.00028 was based on [a keras implementation](
 https://github.com/keras-team/keras-contrib/blob/master/examples/improved_wgan.py).
 
