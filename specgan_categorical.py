@@ -37,6 +37,7 @@ except ImportError:
 BATCH_SIZE = 64
 TRAINING_RATIO = 5  # The training ratio is the number of discriminator updates per generator update. The paper uses 5.
 GRADIENT_PENALTY_WEIGHT = 10  # As per the paper
+DIM_INPUT=10000
 
 D = 64 # model size coef
 
@@ -214,7 +215,7 @@ for layer in discriminator.layers:
 discriminator.trainable = False
 generator.trainable = True
 
-generator_input = Input(shape=(100,)) # 100 = dimention of random input vector
+generator_input = Input(shape=(DIM_INPUT,)) # 100 = dimention of random input vector
 generator_layers = generator(generator_input)
 
 # replace input layer of discriminator with generatoer output
@@ -235,7 +236,7 @@ discriminator.trainable = True
 generator.trainable = False
 
 real_samples = Input(shape=X_train_.shape[1:])
-generator_input_for_discriminator = Input(shape=(100,))  # random seed input
+generator_input_for_discriminator = Input(shape=(DIM_INPUT,))  # random seed input
 generated_samples_for_discriminator = generator(generator_input_for_discriminator)  # random seed -> generator
 d_output_from_generator, d_output_from_generator_categories = swap_input(discriminator, generated_samples_for_discriminator) # # random seed -> generator -> discriminator
 d_output_from_real_samples, d_output_from_real_samples_categories = swap_input(discriminator, real_samples) # real spectrogram images -> discriminator_loss_real
