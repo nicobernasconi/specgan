@@ -37,7 +37,7 @@ except ImportError:
 BATCH_SIZE = 64
 TRAINING_RATIO = 5  # The training ratio is the number of discriminator updates per generator update. The paper uses 5.
 GRADIENT_PENALTY_WEIGHT = 10  # As per the paper
-DIM_INPUT=100
+DIM_INPUT=10000
 
 D = 64 # model size coef
 
@@ -55,7 +55,7 @@ def gradient_penalty_loss(y_true, y_pred, averaged_samples, gradient_penalty_wei
 
 
 def make_generator():
-    """Creates a generator model that takes a 100-dimensional noise vector as a "seed", and outputs images
+    """Creates a generator model that takes a 10000-dimensional noise vector as a "seed", and outputs images
     of size 128x128x1."""
 
     model = Sequential()
@@ -123,7 +123,7 @@ class RandomWeightedAverage(_Merge):
 
 def generate_images(generator_model, output_dir, epoch):
     """Feeds random seeds into the generator and tiles and saves the output to a PNG file."""
-    test_image_stack = generator_model.predict(np.random.rand(10, 100))
+    test_image_stack = generator_model.predict(np.random.rand(10, DIM_INPUT))
 
     # generate and save sample audio file for each epoch
     for i in range(4):
@@ -215,7 +215,7 @@ for layer in discriminator.layers:
 discriminator.trainable = False
 generator.trainable = True
 
-generator_input = Input(shape=(DIM_INPUT,)) # 100 = dimention of random input vector
+generator_input = Input(shape=(DIM_INPUT,)) # DIM_INPUT = dimention of random input vector
 generator_layers = generator(generator_input)
 
 # replace input layer of discriminator with generatoer output
@@ -312,13 +312,13 @@ for epoch in range(args.epochs):
             image_batch = discriminator_minibatches[j * BATCH_SIZE:(j + 1) * BATCH_SIZE]
             categories_batch = categories_minibatches[j * BATCH_SIZE:(j + 1) * BATCH_SIZE]
 
-            noise = np.random.rand(BATCH_SIZE, 100).astype(np.float32)
+            noise = np.random.rand(BATCH_SIZE, DIM_INPUT).astype(np.float32)
             d_logs = discriminator_model.train_on_batch([image_batch, noise], [positive_y, negative_y, dummy_y, categories_batch])
             nb_batch = (j + i * TRAINING_RATIO)  + epoch * (batch_per_epoch * TRAINING_RATIO)
             write_tensorboard_log(d_callback, d_names, d_logs, nb_batch)
 
         # training G
-        g_logs = generator_model.train_on_batch(np.random.rand(BATCH_SIZE, 100), [positive_y])
+        g_logs = generator_model.train_on_batch(np.random.rand(BATCH_SIZE, DIM_INPUT), [positive_y])
         nb_batch =  epoch * (batch_per_epoch * TRAINING_RATIO) + i * TRAINING_RATIO
         write_tensorboard_log(g_callback, g_names, [g_logs], nb_batch)
 
