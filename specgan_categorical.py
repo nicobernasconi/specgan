@@ -325,9 +325,7 @@ for epoch in range(args.epochs):
     # export generated images and save sample audio per each epoch
     generate_images(generator, args.output_dir, epoch)
 
-    # save models at checkpoints
-    if epoch % args.checkpoints == 0:
-        outfile = os.path.join(args.output_dir, 'generator_epoch_{}_{:.3}.h5'.format(epoch, g_logs))
-        generator.save_weights(outfile)
-        outfile = os.path.join(args.output_dir, 'discriminator_epoch_{}_{:.3}.h5'.format(epoch, d_logs[0]))
-        discriminator.save_weights(outfile)
+outfile = os.path.join(args.output_dir, 'generator.h5')
+generator.save_weights(outfile)
+outfile = os.path.join(args.output_dir, 'discriminator.h5')
+discriminator.save_weights(outfile)
