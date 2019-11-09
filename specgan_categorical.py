@@ -178,12 +178,16 @@ parser.add_argument("--output_dir", "-o", required=True, help="Directory to outp
 parser.add_argument("--input_data", "-i", required=True, help="Training data in .npz created with preprocess.py")
 parser.add_argument("--epochs", "-e", default=1000, type=int, help="Total number of Epochs")
 parser.add_argument("--checkpoints", "-cp", default=50, type=int, help="Save model at each (checkpoints) epochs")
+parser.add_argument("--weights_dir", "-w", default=None, help="Directorio de los pesos de la red preentrenada")
+parser.add_argument("--log_dir", "-l",required=True, help="Directorio de los pesos de la red preentrenada")
+
 args = parser.parse_args()
 
 if os.path.exists(args.output_dir) is False:
     os.mkdir(args.output_dir)
-if os.path.exists("./logs/") is False:
-    os.mkdir("./logs/")
+if os.path.exists(args.log_dir) is False:
+    os.mkdir(args.log_dir)
+    
 #---------------------------------
 # load data
 
@@ -263,6 +267,14 @@ discriminator_model.compile(optimizer=Adam(0.0001, beta_1=0.5, beta_2=0.9),
                             loss=[wasserstein_loss, wasserstein_loss, partial_gp_loss, categorical_crossentropy])
 discriminator_model.summary()
 
+###################
+#Load weights
+if (arg.weights_dir!=None):
+    weights_file_D=glob(arg.weights_dir+'/disc/'+'*.h5')[0]
+    weights_file_G=glob(arg.weights_dir+'/gen/'+'*.h5')[0]
+    generator_model.load_weights(weights_file_G)
+    discriminator_model.load_weights(weights_file_D)
+    
 ##################
 # Training
 
@@ -276,14 +288,14 @@ now=datetime.datetime.now()
 datestr = now.strftime("%y%m%d-%H%M%s")
 
 # for generator
-log_path = './logs/generator/' + datestr
+log_path = args.log_dir+'/generator/' + datestr
 g_callback = TensorBoard(log_path)
 g_callback.set_model(generator_model)
 g_names = ["generator_loss", "generator_loss_ws"]
 print ("for generator")
 print ("tensorboard --port 6006 --logdir " + log_path + " &")
 
-log_path = './logs/discriminator/' + datestr
+log_path = args.log_dir+'/discriminator/' + datestr
 d_callback = TensorBoard(log_path)
 d_callback.set_model(discriminator_model)
 d_names = ["discriminator_loss", "discriminator_loss_real", "discriminator_loss_fake",
