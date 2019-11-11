@@ -334,10 +334,10 @@ for epoch in range(args.epochs):
         nb_batch =  epoch * (batch_per_epoch * TRAINING_RATIO) + i * TRAINING_RATIO
         write_tensorboard_log(g_callback, g_names, [g_logs], nb_batch)
 
-    # export generated images and save sample audio per each epoch
-    generate_images(generator, args.output_dir, epoch)
-     # save models at checkpoints
+    
+     # save image & models at checkpoints
     if epoch % args.checkpoints == 0:
+        generate_images(generator, args.output_dir, epoch)
         outfile = os.path.join(args.output_dir, 'generator_epoch_{}_{:.3}.h5'.format(epoch, g_logs))
         generator.save_weights(outfile)
         outfile = os.path.join(args.output_dir, 'discriminator_epoch_{}_{:.3}.h5'.format(epoch, d_logs[0]))
