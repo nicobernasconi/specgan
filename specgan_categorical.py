@@ -269,6 +269,7 @@ discriminator_model.summary()
 
 ###################
 #Load weights
+from glob import glob
 if (args.weights_dir!=None):
     weights_file_D=glob(args.weights_dir+'/disc/'+'*.h5')[0]
     weights_file_G=glob(args.weights_dir+'/gen/'+'*.h5')[0]
